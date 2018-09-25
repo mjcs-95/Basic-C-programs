@@ -1,5 +1,4 @@
 
-//Initsize defines the dimension of the board
 //Change int val and the struct attributes types to float or char to make new type vectors
 #define INITSIZE 3
 
