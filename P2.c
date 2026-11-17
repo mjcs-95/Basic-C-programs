@@ -24,8 +24,8 @@ int Ej02() {
     printf("Introduzca un entero: ");
     scanf("%d", &n3);
 
-    int mayor = n1;
-    int menor = n1;
+    mayor = n1;
+    menor = n1;
 
     if (n2 > mayor) mayor = n2;
     if (n2 < menor) menor = n2;
