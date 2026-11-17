@@ -12,5 +12,5 @@ void    vConstructor(iVector *v);
 void    vDestructor (iVector *v);
 void    vExpand     (iVector *v);
 void    vPush       (iVector *v, int val);
-void    vSet        (iVector *v, int val, int idx);
+void    vSet        (iVector *v, int idx, int val);
 int     vGet        (iVector *v, int idx);
