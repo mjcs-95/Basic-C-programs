@@ -33,7 +33,7 @@ int Ej1_c(){
 int Ej1() {
     printf("\nSalida del apartado a: \n"); Ej1_a();
     printf("\nSalida del apartado b: \n"); Ej1_b();
-    printf("\nSalida del apartado b: \n"); Ej1_c();
+    printf("\nSalida del apartado c: \n"); Ej1_c();
     printf("\n");
     return 0;
 }
@@ -53,11 +53,19 @@ int Ej3() {
     int entero;
     float flotante;
     double flotante_doble;
-    printf("Introduzca un char  : "); scanf("%c" ,&letra); scanf("%c");
-    printf("Introduzca un int   : "); scanf("%d" ,&entero);
-    printf("Introduzca un float : "); scanf("%f" ,&flotante);
-    printf("Introduzca un double: "); scanf("%lf",&flotante_doble);
+    printf("Introduzca un char  : ");
+    scanf(" %c" ,&letra);
 
+    printf("Introduzca un int   : ");
+    scanf("%d" ,&entero);
+    
+    printf("Introduzca un float : ");
+    scanf("%f" ,&flotante);
+    
+    printf("Introduzca un double: ");
+    scanf("%lf",&flotante_doble);
+
+    printf("\n--- Datos introducidos ---\n");
     printf("char introducido   : %c.\n", letra);
     printf("int introducido    : %d.\n", entero);
     printf("float introducido  : %f.\n", flotante);
@@ -69,31 +77,35 @@ int Ej3() {
 int Ej4(){
     char letra;
     printf("\nIntroduzca un char  : ");
-    scanf("%c",&letra);
-    scanf("%c"); //Limpiar el \n que queda al pulsar enter
-    printf("ASCII: %d ; Siguiente: %c \n", letra, letra+1);
+    scanf(" %c",&letra);
+    printf("ASCII: %d ;\nSiguiente: %c\n", letra, letra+1);
     return 0;
 }
 
 /*Ejercicio5 tamaño en bytes de los tipos basicos*/
 int Ej5(){
-    printf("char  : %d\n", sizeof(char) );
-    printf("int   : %d\n", sizeof(int) );
-    printf("float : %d\n", sizeof(float) );
-    printf("double: %d\n", sizeof(double) );
+    printf("char  : %zu\n", sizeof(char) );
+    printf("int   : %zu\n", sizeof(int) );
+    printf("float : %zu\n", sizeof(float) );
+    printf("double: %zu\n", sizeof(double) );
     return 0;
 }
 
 /*Ejercicio6 Valor de un polinomio ax^3+bx^2+cx+d introduciendo  x,a,b,c y d*/
 int Ej6(){
     float x, a, b, c, d;
-    printf("Introduzca x: "); scanf("%f",&x);
-    printf("Introduzca a: "); scanf("%f",&a);
-    printf("Introduzca b: "); scanf("%f",&b);
-    printf("Introduzca c: "); scanf("%f",&c);
-    printf("Introduzca d: "); scanf("%f",&d);
-    printf("x=%f, a=%f, b=%f, c=%f, d=%f \n", x, a, b, c, d );
-    float resultado = a*x*x*x + b*x*x + c*x + d;
+    printf("Introduzca x: ");
+    scanf("%f",&x);
+    printf("Introduzca a: ");
+    scanf("%f",&a);
+    printf("Introduzca b: ");
+    scanf("%f",&b);
+    printf("Introduzca c: ");
+    scanf("%f",&c);
+    printf("Introduzca d: ");
+    scanf("%f",&d);
+    printf("x = %f, a = %f, b = %f, c = %f, d = %f \n", x, a, b, c, d );
+    float resultado = ((a * x + b) * x + c) * x + d;
     printf("ax^3 + bx^2 + cx + d = %f \n", resultado);
     return 0;
 }
@@ -103,23 +115,35 @@ int Ej7(){
     int a, b;
     printf("Introduzca a: "); scanf("%d", &a);
     printf("Introduzca b: "); scanf("%d", &b);
-    printf("a+b     : %d \n", a+b);
-    printf("a-b     : %d \n", a-b);
-    printf("b-a     : %d \n", b-a);
-    printf("a*b     : %d \n", a*b);
-    printf("a/b     : %d \n", a/b);
-    printf("a mod b : %d \n", a%b);
-    printf("b/a     : %d \n", b/a);
-    printf("b mod a : %d \n", b%a);
+    printf("a + b   : %d \n", a+b);
+    printf("a - b   : %d \n", a-b);
+    printf("b - a   : %d \n", b-a);
+    printf("a * b   : %d \n", a*b);
+    if (b != 0) {
+        printf("a / b   : %d \n", a/b);
+        printf("a mod b : %d \n", a%b);
+    } else{
+        printf("Error: La división no permite que b sea 0.\n");
+    }
+    if (a != 0) {
+        printf("b / a   : %d \n", b/a);
+        printf("b mod a : %d \n", b%a);
+    } else{
+        printf("Error: La división no permite que a sea 0.\n");
+    }
+
     return 0;
 }
 
 /*Ejercicio8 Leer 3 enteros y calcular su media aritmetica*/
 int Ej8(){
     int a, b, c;
-    printf("Introduzca a: "); scanf("%d", &a);
-    printf("Introduzca b: "); scanf("%d", &b);
-    printf("Introduzca c: "); scanf("%d", &c);
+    printf("Introduzca a: "); 
+    scanf("%d", &a);
+    printf("Introduzca b: "); 
+    scanf("%d", &b);
+    printf("Introduzca c: "); 
+    scanf("%d", &c);
     printf("Media aritmetica: %f \n", (a+b+c)/3.0f);
     return 0;
 }
@@ -128,10 +152,11 @@ int Ej8(){
 /*Ejercicio9 Leer radio de circunferencia y mostrar, perimetro, area y volumen*/
 int Ej9(){
     float r;
-    printf("Introduzca el radio: "); scanf("%f", &r);
-    printf("Perimetro de la circunferencia : %f \n", 2*PI*r );
-    printf("Area del circulo               : %f \n", PI*PI*r );
-    printf("Volumen de la esfera           : %f \n", (4/3.0f)*PI*r*r*r );
+    printf("Introduzca el radio: ");
+    scanf("%f", &r);
+    printf("Perimetro de la circunferencia: %f \n", 2 * PI * r);
+    printf("Area del circulo              : %f \n", PI * r * r);
+    printf("Volumen de la esfera          : %f \n", (4/3.0f) * PI * r * r * r);
     return 0;
 }
 
@@ -139,8 +164,9 @@ int Ej9(){
 int Ej10(){
     const float G = 9.8f;
     float L;
-    printf("Introduzca la longitud del pendulo: "); scanf("%f", &L);
-    printf("El periodo del pendulo es : %f \n", 2*PI*sqrt(L/G) );
+    printf("Introduzca la longitud del pendulo: ");
+    scanf("%f", &L);
+    printf("El periodo del pendulo es: %f \n", 2 * PI * sqrt(L/G) );
     return 0;
 }
 
@@ -203,27 +229,69 @@ int Ej16(){
     printf("Dinero gastado en gasolina(centimos) : "); scanf("%f", &dinero);
     printf("Tiempo gastado en el viaje(horas)    : "); scanf("%f", &horas);
     printf("Minutos añadidos sobre la ultima hora: "); scanf("%f", &minutos);
-    horas = horas + (minutos/60);
 
-    printf("Consumo de 100km(litros): %f \n", 100*(dinero/precio)/distancia);
-    printf("Consumo de   1km(litros): %f \n", (dinero/precio)/distancia);
-    printf("Consumo de 100km(euros) : %f \n", 100*(dinero/distancia)/100 );
-    printf("Consumo de   1km(euros) : %f \n", (dinero/distancia)/100 );
-    printf("Velocidad media(km/h)   : %f \n", distancia/horas );
-    printf("Velocidad media (m/s)   : %f \n", 1000*(distancia/horas)/3600 );
+    if (distancia <= 0 || precio <= 0) {
+        printf("\n[Error] La distancia y el precio del combustible deben ser mayores que 0.\n");
+        return 1;
+    }
+
+    float tiempo_total_horas = horas + (minutos/60);
+    if (tiempo_total_horas <= 0) {
+        printf("\n[Error] El tiempo total del viaje debe ser mayor que 0.\n");
+        return 1;
+    }
+
+    float litros_totales = dinero / precio;
+    float euros_totales = dinero / 100.0f;
+
+    float consumo_litros_1km = litros_totales / distancia;
+    float consumo_euros_1km = euros_totales / distancia;
+
+    float velocidad_kmh = distancia / tiempo_total_horas;
+    float velocidad_ms  = velocidad_kmh / 3.6f;
+
+    printf("\n========================================\n");
+    printf("           RESULTADOS DEL VIAJE         \n");
+    printf("========================================\n");
+    printf("Litros consumidos totales : %.2f L\n", litros_totales);
+    printf("Consumo por 100 km        : %.2f L (%.2f €)\n", 100 * consumo_litros_1km, 100 * consumo_euros_1km);
+    printf("Consumo por 1 km          : %.4f L (%.4f €)\n", consumo_litros_1km, consumo_euros_1km);
+    printf("Velocidad media           : %.2f km/h  [%.2f m/s]\n", velocidad_kmh, velocidad_ms);
+    printf("========================================\n");
     return 0;
 }
 
 int Ej(){ return 0; }
 int main() {
-    int i;
-    i=3;
-    while (0<i && i<17) { //16 ejercicios
-        printf("\nSeleccione un ejercicio (1-16) o salir: "); scanf("%d",&i);
-        switch(i){
+    int opcion;
+    opcion=3;
+    do {
+        printf("\n========================================\n");
+        printf("          MENÚ DE EJERCICIOS (1-16)     \n");
+        printf("========================================\n");
+        printf("  [1 a 16] Ejecutar el ejercicio correspondiente\n");
+        printf("  [0]      Salir del programa\n");
+        printf("----------------------------------------\n");
+        printf("Seleccione una opción: ");
+
+        int c;
+        if (scanf("%d", &opcion) != 1) {
+            printf("\n[Error] Entrada no válida. Introduzca un número entero.\n");
+            while ((c = getchar()) != '\n' && c != EOF) {};
+            opcion = -1;
+            continue;
+        }
+
+        
+        while ((c = getchar()) != '\n' && c != EOF) {}
+
+        switch(opcion){
+            case  0:
+                printf("\nSaliendo del programa. ¡Hasta pronto!\n");
+                break;
             case  1: Ej1() ; break;
-            case  3: Ej3() ; break;
             case  2: Ej2() ; break;
+            case  3: Ej3() ; break;
             case  4: Ej4() ; break;
             case  5: Ej5() ; break;
             case  6: Ej6() ; break;
@@ -237,7 +305,15 @@ int main() {
             case 14: Ej14(); break;
             case 15: Ej15(); break;
             case 16: Ej16(); break;
+            default:
+                printf("\n[Aviso] Opción incorrecta. Elija un número entre 1 y 16 (o 0 para salir).\n");
+                break;            
         }
-    }
+        if (0 < opcion && opcion < 17) {
+            printf("\nPresione [Enter] para volver al menú principal...");
+            getchar();
+        }
+
+    } while (opcion != 0);
     return 0;
 }
