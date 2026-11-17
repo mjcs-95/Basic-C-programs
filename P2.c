@@ -6,7 +6,7 @@
 int Ej01(){
     int n;
     printf("Introduzca un entero: "); scanf("%d",&n);
-    if(n%2)
+    if(n % 2 != 0)
         printf("%d es impar\n", n);
     else
         printf("%d es par\n", n);
@@ -15,47 +15,39 @@ int Ej01(){
 
 /*Ejercicio2 Mayor y el menor de 3 numeros, con el minimo de comparaciones*/
 int Ej02(){
-    int n1, n2, n3;
-    printf("Introduzca un entero: "); scanf("%d",&n1);
-    printf("Introduzca un entero: "); scanf("%d",&n2);
-    printf("Introduzca un entero: "); scanf("%d",&n3);
-    if(n1>n2){
-        if(n2>n3){
-            printf("Mayor : %d\n", n1);
-            printf("Menor : %d\n", n3);
-        }else if(n1>n3){ //Máximo 3 comparaciones
-            printf("Mayor : %d\n", n1);
-            printf("Menor : %d\n", n2);
-        }else{
-            printf("Mayor : %d\n", n3);
-            printf("Menor : %d\n", n2);
-        }
-    }else{
-        if(n1>n3) {
-            printf("Mayor : %d\n", n2);
-            printf("Menor : %d\n", n3);
-        }else if (n2>n3) { //Máximo 3 comparaciones
-            printf("Mayor : %d\n", n2);
-            printf("Menor : %d\n", n1);
-        }else{
-            printf("Mayor : %d\n", n3);
-            printf("Menor : %d\n", n1);
-        }
-    }
+    int n1, n2, n3, mayor, menor;
+    printf("Introduzca un entero: ");
+    scanf("%d",&n1);
+    printf("Introduzca un entero: ");
+    scanf("%d",&n2);
+    printf("Introduzca un entero: ");
+    scanf("%d",&n3);
+
+    int mayor = n1;
+    int menor = n1;
+
+    if (n2 > mayor) mayor = n2;
+    if (n2 < menor) menor = n2;
+
+    if (n3 > mayor) mayor = n3;
+    if (n3 < menor) menor = n3;
+
+    printf("Mayor : %d\n", mayor);
+    printf("Menor : %d\n", menor);
     return 0;
 }
 
 int Ej03(){
-    float a,b,c;
+    float a, b, c;
     printf("Introduzca a: "); scanf("%f",&a);
     printf("Introduzca b: "); scanf("%f",&b);
-    printf("Introduzca b: "); scanf("%f",&c);
+    printf("Introduzca c: "); scanf("%f",&c);
     float root = b*b - 4*a*c;
     if (root<0.0f){
         printf("No existen raices reales \n");
     }else{
-        printf("Raiz 1: %f \n", ( -b + sqrt(root))/ 2.0f*a );
-        printf("Raiz 2: %f \n", ( -b - sqrt(root))/ 2.0f*a );
+        printf("Raiz 1: %f \n", ( -b + sqrt(root))/ (2.0f*a) );
+        printf("Raiz 2: %f \n", ( -b - sqrt(root))/ (2.0f*a) );
     }
     return 0;
 }
@@ -64,8 +56,22 @@ int Ej04(){
     int a,b;
     printf("Introduzca a: "); scanf("%d",&a);
     printf("Introduzca b: "); scanf("%d",&b);
-    if(a%b==0){ printf("a es divisible por b"); }
-    if(b%a==0){ printf("b es divisible por a"); }
+    int es_divisible = 0;
+    
+    if (b != 0 && a % b == 0) {
+        printf("%d es divisible por %d.\n", a, b);
+        es_divisible = 1;
+    }
+
+    if (a != 0 && b % a == 0) {
+        printf("%d es divisible por %d.\n", b, a);
+        es_divisible = 1;
+    }
+
+    if (!es_divisible) {
+        printf("Ninguno de los dos números es divisible por el otro.\n");
+    }
+    return 0;
 }
 
 int Ej05(){
@@ -73,18 +79,28 @@ int Ej05(){
     char op;
     printf("Introduzca a: "); scanf("%f",&a);
     printf("Introduzca b: "); scanf("%f",&b);
-    printf("Introduzca operador(+, -, *, /):"); scanf("%c",&op); scanf("%c");
+    printf("Introduzca operador(+, -, *, /):"); scanf(" %c",&op);
     switch (op) {
-        case '+': printf("Resultado: %f ",a+b); break;
-        case '-': printf("Resultado: %f ",a-b); break;
-        case '*': printf("Resultado: %f ",a*b); break;
-        case '/': printf("Resultado: %f ",a/b); break;
+        case '+': printf("Resultado: %.2f ",a+b); break;
+        case '-': printf("Resultado: %.2f ",a-b); break;
+        case '*': printf("Resultado: %.2f ",a*b); break;
+        case '/': 
+            if (b != 0) {
+                printf("Resultado: %.2f\n", a / b);
+            } else {
+                printf("Error: No se puede dividir entre cero.\n");
+            }
+            break;
+        default:
+            printf("Error: Operador no válido ('%c').\n", op);
+            break;
     }
 }
 
 int Ej06(){
     int a;
-    printf("Introduzca a: "); scanf("%d",&a);
+    printf("Introduzca un número (1-7): ");
+    scanf("%d",&a);
     switch (a) {
         case 1: printf("Lunes"      ); break;
         case 2: printf("Martes"     ); break;
@@ -93,7 +109,11 @@ int Ej06(){
         case 5: printf("Viernes"    ); break;
         case 6: printf("Sabado"     ); break;
         case 7: printf("Domingo"    ); break;
+        default: 
+            printf("Error: Número fuera de rango. Debe ser entre 1 y 7.\n"); 
+            break;
     }
+    return 0;
 }
 
 int Ej07(){
@@ -101,6 +121,10 @@ int Ej07(){
     printf("Introduce el día : "); scanf("%d",&d);
     printf("Introduce el mes : "); scanf("%d",&m);
     printf("Introduce el anno: "); scanf("%d",&a);
+    if (a < 1 || m < 1 || m > 12) {
+        printf("Fecha errónea.\n");
+        return 0;
+    }
     switch (m) {
         case  1:
         case  3:
@@ -128,7 +152,7 @@ int Ej07(){
         case 2:
             if(d<1){
                 printf("Fecha erronea.\n");
-            }else if(d%400==0 || (d%4==0 && d%100!=0)){
+            }else if(a%400==0 || (a%4==0 && a%100!=0)){
                 if(d>29){
                     printf("Fecha erronea.\n");
                 }else{
@@ -151,10 +175,10 @@ int Ej07(){
 
 int Ej08(){
     int h,m,s;
-    printf("Introduzca la hora     : "); scanf("%f",&h);
-    printf("Introduzca los minutos : "); scanf("%f",&m);
-    printf("Introduzca los segundos: "); scanf("%f",&s);
-    if( (h<0 || h>24) && (m<0 || m>59) && (m<0 || m>59) ){
+    printf("Introduzca la hora     : "); scanf("%d",&h);
+    printf("Introduzca los minutos : "); scanf("%d",&m);
+    printf("Introduzca los segundos: "); scanf("%d",&s);
+    if( (h<0 || h>23) && (m<0 || m>59) && (m<0 || m>59) ){
         printf("Hora no valida.\n");
     }else{
         printf("Hora introducida: %d:%d:%d \n", h, m, s);
@@ -172,6 +196,7 @@ int Ej08(){
         }
         printf("Hora 1 segundo despues: %d:%d:%d\n", h, m, s);
     }
+    return 0;
 }
 
 int Ej09(){
