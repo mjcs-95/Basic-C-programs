@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -418,6 +419,355 @@ int Ej14() {
     return 0;
 }
 
+/* Ej15: Cuadrado latino de orden N */
+int Ej15() {
+    int N;
+    printf("Introduce la dimensión N del cuadrado latino: ");
+    scanf("%d", &N);
+
+    if (N <= 0) {
+        printf("La dimensión debe ser positiva.\n");
+        return 0;
+    }
+
+    int cifras = 0;
+    int temp = N;
+    while (temp > 0) {
+        cifras++;
+        temp /= 10;
+    }
+
+    int matriz[N][N];
+    int i, j;
+
+    for (i = 0; i < N; i++) {
+        for (j = 0; j < N; j++) {
+            matriz[i][j] = (i + j) % N + 1;
+        }
+    }
+
+    printf("\nCuadrado Latino de orden %d:\n", N);
+    for (i = 0; i < N; i++) {
+        for (j = 0; j < N; j++) {
+
+			printf("%*d", cifras + 1, matriz[i][j]);// '*' means the width of the field is determined by the value of cifras + 1
+        }
+        printf("\n");
+    }
+    return 0;
+}
+
+/* Ej16: Longitud de cadena sin string.h */
+void limpiar_buffer_entrada() {
+	int c;
+	while ((c = getchar()) != '\n' && c != EOF) {}
+}
+
+int longitud(const char* cad) {
+    const char* p = cad;
+    while (*p != '\0') {
+        p++;
+    }
+    return (int)(p - cad);
+}
+
+int Ej16() {
+    int max_len;
+    char* cadena;
+    char* nl;
+
+    printf("Introduce la longitud máxima de la cadena: ");
+    if (scanf("%d", &max_len) != 1 || max_len <= 0) {
+        printf("Error: Tamaño no válido.\n");
+        return 1;
+    }
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {
+
+    }
+
+    cadena = (char*)malloc((size_t)(max_len + 1) * sizeof(char));
+    if (cadena == NULL) {
+        printf("Error: No se pudo reservar memoria con malloc.\n");
+        return 1;
+    }
+
+	int encontro_salto = 0;
+    printf("Introduce la cadena: ");
+    if (fgets(cadena, max_len + 1, stdin) != NULL) {
+        nl = cadena;
+        while (*nl != '\0') {
+            if (*nl == '\n') {
+                *nl = '\0';
+                encontro_salto = 1;
+                break;
+            }
+            nl++;
+        }
+
+
+
+        printf("Cadena introducida: \"%s\"\n", cadena);
+        printf("Longitud calculada: %d\n", longitud(cadena));
+    }
+	
+    if (!encontro_salto) {
+        limpiar_buffer_entrada();
+    }
+
+    free(cadena);
+    return 0;
+}
+
+/* EJ17: Concatenar cadenas sin string.h */
+void concatena(char* c1, char* c2) {
+    char* dst = c2;
+    char* src = c1;
+
+    while (*dst != '\0') {
+        dst++;
+    }
+
+    while (*src != '\0') {
+        *dst = *src;
+        dst++;
+        src++;
+    }
+    *dst = '\0';
+}
+
+static void limpiar_salto_linea(char* cad) {
+    char* p = cad;
+    while (*p != '\0') {
+        if (*p == '\n') {
+            *p = '\0';
+            break;
+        }
+        p++;
+    }
+}
+
+int Ej17() {
+    int len1, len2;
+    char* c1;
+    char* c2;
+
+    printf("Longitud máxima de la primera cadena (c1): ");
+    if (scanf("%d", &len1) != 1 || len1 <= 0) {
+        printf("Error: Longitud no válida.\n");
+        return 1;
+    }
+
+    printf("Longitud máxima de la segunda cadena (c2): ");
+    if (scanf("%d", &len2) != 1 || len2 <= 0) {
+        printf("Error: Longitud no válida.\n");
+        return 1;
+    }
+
+    {
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF);
+    }
+
+    c1 = (char*)calloc((size_t)(len1 + 1), sizeof(char));
+    c2 = (char*)calloc((size_t)(len1 + len2 + 1), sizeof(char));
+
+    if (c1 == NULL || c2 == NULL) {
+        printf("Error: No se pudo reservar memoria con calloc.\n");
+        free(c1);
+        free(c2);
+        return 1;
+    }
+
+    printf("Introduce la cadena c1: ");
+    if (fgets(c1, len1 + 1, stdin) != NULL) {
+        limpiar_salto_linea(c1);
+    }
+    limpiar_buffer_entrada();
+
+    printf("Introduce la cadena c2: ");
+    if (fgets(c2, len2 + 1, stdin) != NULL) {
+        limpiar_salto_linea(c2);
+    }
+    limpiar_buffer_entrada();
+
+    concatena(c1, c2);
+    printf("Resultado de concatenar c1 al final de c2: \"%s\"\n", c2);
+
+    free(c1);
+    free(c2);
+    return 0;
+}
+
+/* Ej18: Operaciones con cadenas */
+static int comparar_cadenas(const char* s1, const char* s2) {
+    while (*s1 != '\0' && *s2 != '\0' && *s1 == *s2) {
+        s1++;
+        s2++;
+    }
+    return (int)((unsigned char)*s1 - (unsigned char)*s2);
+}
+
+static int copiar_cad(const char* origen, char** destino) {
+    int len = longitud(origen);
+    char* nuevo;
+    const char* src;
+    char* dst;
+
+    nuevo = (char*)calloc((size_t)(len + 1), sizeof(char));
+    if (nuevo == NULL) {
+        return 0;
+    }
+
+    src = origen;
+    dst = nuevo;
+    while (*src != '\0') {
+        *dst = *src;
+        dst++;
+        src++;
+    }
+    *dst = '\0';
+
+    free(*destino);
+    *destino = nuevo;
+    return 1;
+}
+
+static char* leer_cadena_dinamica(int max_len) {
+    char* cad;
+    char* p;
+    int encontro_salto;
+
+    if (max_len <= 0) {
+        return NULL;
+    }
+
+    cad = (char*)calloc((size_t)(max_len + 1), sizeof(char));
+    if (cad == NULL) {
+        printf("[Error] No se pudo reservar memoria.\n");
+        return NULL;
+    }
+
+    if (fgets(cad, max_len + 1, stdin) == NULL) {
+        free(cad);
+        return NULL;
+    }
+
+    encontro_salto = 0;
+    p = cad;
+    while (*p != '\0') {
+        if (*p == '\n') {
+            *p = '\0';
+            encontro_salto = 1;
+            break;
+        }
+        p++;
+    }
+
+    if (!encontro_salto) {
+        limpiar_buffer_entrada();
+    }
+
+    return cad;
+}
+
+
+int Ej18() {
+    int len1, len2, opcion;
+    char* cad1 = NULL;
+    char* cad2 = NULL;
+
+    printf("Longitud máxima de la cadena 1: ");
+    if (scanf("%d", &len1) != 1 || len1 <= 0) {
+        printf("Error: Longitud no válida.\n");
+        limpiar_buffer_entrada();
+        return 1;
+    }
+
+    printf("Longitud máxima de la cadena 2: ");
+    if (scanf("%d", &len2) != 1 || len2 <= 0) {
+        printf("Error: Longitud no válida.\n");
+        limpiar_buffer_entrada();
+        return 1;
+    }
+
+    limpiar_buffer_entrada();
+
+    printf("Introduce la cadena 1: ");
+    cad1 = leer_cadena_dinamica(len1);
+
+    printf("Introduce la cadena 2: ");
+    cad2 = leer_cadena_dinamica(len2);
+
+    if (cad1 == NULL || cad2 == NULL) {
+        free(cad1);
+        free(cad2);
+        return 1;
+    }
+
+    do {
+        printf("\n--- OPERACIONES CON CADENAS ---\n");
+        printf("Cadena 1: \"%s\"\n", cad1);
+        printf("Cadena 2: \"%s\"\n", cad2);
+        printf("1.- Comparación cadenas\n");
+        printf("2.- Copia de la primera sobre la segunda\n");
+        printf("3.- Concatenación de ambas cadenas\n");
+        printf("4.- Cálculo de la longitud de las cadenas\n");
+        printf("0.- Volver / Salir\n");
+        printf("Seleccione una opción: ");
+
+        if (scanf("%d", &opcion) != 1) {
+            printf("[Error] Entrada no válida.\n");
+            limpiar_buffer_entrada();
+            opcion = -1;
+            continue;
+        }
+        limpiar_buffer_entrada();
+
+        switch (opcion) {
+            case 1: {
+                int cmp = comparar_cadenas(cad1, cad2);
+                if (cmp == 0) {
+                    printf("Ambas cadenas son iguales.\n");
+                }
+                else if (cmp < 0) {
+                    printf("La cadena 1 es menor que la cadena 2 (diferencia: %d).\n", cmp);
+                }
+                else {
+                    printf("La cadena 1 es mayor que la cadena 2 (diferencia: %d).\n", cmp);
+                }
+                break;
+            }
+            case 2:
+                if (copiar_cad(cad1, &cad2)) {
+                    printf("Copia realizada. Nueva cadena 2: \"%s\"\n", cad2);
+                }
+                else {
+                    printf("[Error] Fallo de memoria al copiar.\n");
+                }
+                break;
+            case 3:
+                concatena(cad1, cad2);
+				printf("Concatenación realizada. Nueva cadena 2: \"%s\"\n", cad2);
+                break;
+            case 4:
+                printf("Longitud de cadena 1: %d\n", longitud(cad1));
+                printf("Longitud de cadena 2: %d\n", longitud(cad2));
+                break;
+            case 0:
+                printf("Saliendo del ejercicio 18...\n");
+                break;
+            default:
+                printf("[Aviso] Opción no válida.\n");
+                break;
+        }
+        limpiar_buffer_entrada();
+    } while (opcion != 0);
+
+    free(cad1);
+    free(cad2);
+    return 0;
+}
 
 int main() {
     int opcion;
@@ -426,7 +776,7 @@ int main() {
         print_menu();
 
         if (scanf("%d", &opcion) != 1) {
-            printf("\n[Error] Entrada no válida. Introduzca un número entero.\n");
+            printf("\nError: Entrada no válida. Introduzca un número entero.\n");
             int c;
             while ((c = getchar()) != '\n' && c != EOF);
             opcion = -1;
@@ -452,11 +802,11 @@ int main() {
         case 12: Ej12(); break;
         case 13: Ej13(); break;
         case 14: Ej14(); break;
-/**
         case 15: Ej15(); break;
         case 16: Ej16(); break;
         case 17: Ej17(); break;
         case 18: Ej18(); break;
+/**
         case 19: Ej19(); break;
         case 20: Ej20(); break;
         case 21: Ej21(); break;
